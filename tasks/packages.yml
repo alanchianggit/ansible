@@ -1,0 +1,20 @@
+- name: Install Common packages
+  yum:
+    state: present
+    name:
+      - epel-release
+      - wget
+      - openvpn
+      - unzip
+      - htop
+      - openssh
+      - nano
+      - make
+      - automake
+      - autoconf
+      - gcc
+      - openssl-devel
+      - git
+      - glib2-devel
+      - net-snmp-devel
+      - pcre2-devel
