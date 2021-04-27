@@ -30,7 +30,6 @@
       - wget
       - unzip
       - htop
-      - openssh
       - nano
       - make
       - automake
