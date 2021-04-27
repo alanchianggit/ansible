@@ -35,7 +35,6 @@
       - automake
       - autoconf
       - gcc
-      - docker-ce
       - docker-compose
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
