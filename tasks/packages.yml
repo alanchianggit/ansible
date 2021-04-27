@@ -1,4 +1,4 @@
-- name: Install Common packages
+- name: Install Common packages (CENTOS or REDHAT)
   yum:
     state: present
     name:
@@ -18,3 +18,30 @@
       - glib2-devel
       - net-snmp-devel
       - pcre2-devel
+      - docker-ce
+      - docker-compose
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat'
+
+
+- name: Install Common packages (DEBIAN or UBUNTU)
+  apt:
+    state: present
+    name:
+      - wget
+      - unzip
+      - htop
+      - openssh
+      - nano
+      - make
+      - automake
+      - autoconf
+      - gcc
+      - openssl-devel
+      - git
+      - glib2-devel
+      - net-snmp-devel
+      - pcre2-devel
+      - docker-ce
+      - docker-compose
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
