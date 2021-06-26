@@ -2,6 +2,6 @@
 vpndir: /etc/openvpn
 client: /etc/openvpn/client
 vpnfiles:
-  - {src: '{{ vpndir }}/pia/CA Vancouver.ovpn', dest: '{{ client }}/pia-van-strong.conf'}
-  - {src: '{{ vpndir }}/pia/CA Toronto.ovpn', dest: '{{ client }}/pia-tor-strong.conf'}
+  - {src: '{{ vpndir }}/pia/ca-vancouver.ovpn', dest: '{{ client }}/pia-van-strong.conf'}
+  - {src: '{{ vpndir }}/pia/ca-toronto.ovpn', dest: '{{ client }}/pia-tor-strong.conf'}
 active_vpn: pia-van-strong
