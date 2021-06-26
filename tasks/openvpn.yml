@@ -40,7 +40,7 @@
    - name: Unzip OpenVPN file downloaded from PIA
      unarchive:
 #       src: /etc/openvpn/openvpn-strong.zip
-       url: "https://www.privateinternetaccess.com/openvpn/openvpn-strong.zip"
+       src: "https://www.privateinternetaccess.com/openvpn/openvpn-strong.zip"
        dest: "{{vpndir}}/pia/"
  
    - name: Create Client Directory if doesn't exist
