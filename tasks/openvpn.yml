@@ -81,3 +81,18 @@
       name: "openvpn-client@{{ active_vpn }}"
       enabled: yes
       state: started
+
+ # https://docs.ansible.com/ansible/latest/collections/ansible/posix/sysctl_module.html
+  - name: enable and persist ip forwarding
+    sysctl:
+      name: net.ipv4.ip_forward
+      value: "1"
+      state: present
+      sysctl_set: yes
+      reload: yes
+
+  - firewalld:
+      masquerade: yes
+      state: enabled
+      permanent: true
+      zone: public

@@ -38,5 +38,6 @@
       - gcc
       - docker-compose
       - openvpn
+      - network-manager
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
