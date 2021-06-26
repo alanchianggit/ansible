@@ -19,7 +19,7 @@
     apt:
       state: present
       name:
-      - openvpn
+        - openvpn
     when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
   - name: Delete OpenVPN file from openvpn Folder
