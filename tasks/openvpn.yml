@@ -1,5 +1,6 @@
 ---
-- vars:
+- hosts: localhost
+  vars:
     vpndir: /etc/openvpn
     client: /etc/openvpn/client
     vpnfiles:
