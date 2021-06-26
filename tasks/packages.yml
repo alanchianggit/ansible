@@ -20,6 +20,7 @@
       - pcre2-devel
       - docker-ce
       - docker-compose
+      - openvpn
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat'
 
 
@@ -36,5 +37,6 @@
       - autoconf
       - gcc
       - docker-compose
+      - openvpn
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
