@@ -49,8 +49,11 @@
        path: "{{client}}"
        state: directory
  
-   - name: Copy Vancouver File to Client Folder
-     copy: src={{ item.src }} dest={{ item.dest }}
+   - name: Copy OVPN File to Client Folder
+     copy: 
+       src={{ item.src }} 
+       dest={{ item.dest }}
+       remote_src: yes
      with_items: "{{ vpnfiles }}"
  
    - name: Append User-Pass line
@@ -76,6 +79,7 @@
      file:
        path: /etc/openvpn_exporter
        state: directory
+       remote_src: yes
  
    - name: Start and enable OpenVPN service
      service:
