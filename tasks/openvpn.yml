@@ -1,99 +1,91 @@
 ---
-- hosts: localhost
-  vars:
-    vpndir: /etc/openvpn
-    client: /etc/openvpn/client
-    vpnfiles:
-      - {src: '{{ vpndir }}/pia/CA Vancouver.ovpn', dest: '{{ client }}/pia-van-strong.conf'}
-      - {src: '{{ vpndir }}/pia/CA Toronto.ovpn', dest: '{{ client }}/pia-tor-strong.conf'}
-    active_vpn: pia-van-strong
-
-  tasks:
-  - name: Install Common packages (CENTOS or REDHAT)
-    yum:
-      state: present
-      name:
-        - openvpn
-    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat'
-  
-  - name: Install Common packages (DEBIAN or UBUNTU)
-    apt:
-      state: present
-      name:
-        - openvpn
-    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
-
-  - name: Delete OpenVPN file from openvpn Folder
-    file:
-      path: "{{vpndir}}/openvpn.zip"
-      state: absent
-
-
-  - name: Delete OpenVPN Client file
-    file:
-      path: "{{client}}/pia-*.conf"
-      state: absent
-
-  - name: Download OpenVPN from PIA
-    get_url: 
-      url: "https://www.privateinternetaccess.com/openvpn/openvpn-strong.zip"
-      dest: "{{vpndir}}"
-
-  - name: Unzip OpenVPN file downloaded from PIA
-    unarchive:
-      src: /etc/openvpn/openvpn.zip
-      dest: "{{vpndir}}/pia/"
-
-  - name: Create Client Directory if doesn't exist
-    file:
-      path: "{{client}}"
-      state: directory
-
-  - name: Copy Vancouver File to Client Folder
-    copy: src={{ item.src }} dest={{ item.dest }}
-    with_items: "{{ vpnfiles }}"
-
-  - name: Append User-Pass line
-    lineinfile: 
-      path: "{{ item.dest }}"
-      regexp: '^auth-user-pass'
-      insertafter: '^auth-user-pass'
-      line: "auth-user-pass {{vpndir}}/auth"
-    with_items: "{{ vpnfiles }}"
-
-
-  - name: Add OpenVPN_Exporter configuration
-    blockinfile:
-      path: "{{item.dest}}"
-      marker: "#### OpenVPN_Exporter Configuration ####"
-      insertafter: "auth-user-pass {{vpndir}}/auth"
-      block: |
-        status /etc/openvpn_exporter/
-        status-version 3
-    with_items: "{{ vpnfiles }}"
-
-  - name: Add OpenVPN_Exporter Directory
-    file:
-      path: /etc/openvpn_exporter
-      state: directory
-
-  - name: Start and enable OpenVPN service
-    service:
-      name: "openvpn-client@{{ active_vpn }}"
-      enabled: yes
-      state: started
-
- # https://docs.ansible.com/ansible/latest/collections/ansible/posix/sysctl_module.html
-  - name: enable and persist ip forwarding
-    sysctl:
-      name: net.ipv4.ip_forward
-      value: "1"
-      state: present
-      sysctl_set: yes
-      reload: yes
-
-  - firewalld:
-      masquerade: yes
-      state: enabled
-      permanent: true
-      zone: public
+   - name: Install Common packages (CENTOS or REDHAT)
+     yum:
+       state: present
+       name:
+         - openvpn
+     when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat'
+   
+   - name: Install Common packages (DEBIAN or UBUNTU)
+     apt:
+       state: present
+       name:
+         - openvpn
+     when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+ 
+   - name: Delete OpenVPN file from openvpn Folder
+     file:
+       path: "{{vpndir}}/openvpn.zip"
+       state: absent
+ 
+ 
+   - name: Delete OpenVPN Client file
+     file:
+       path: "{{client}}/pia-*.conf"
+       state: absent
+ 
+   - name: Download OpenVPN from PIA
+     get_url: 
+       url: "https://www.privateinternetaccess.com/openvpn/openvpn-strong.zip"
+       dest: "{{vpndir}}"
+ 
+   - name: Unzip OpenVPN file downloaded from PIA
+     unarchive:
+       src: /etc/openvpn/openvpn.zip
+       dest: "{{vpndir}}/pia/"
+ 
+   - name: Create Client Directory if doesn't exist
+     file:
+       path: "{{client}}"
+       state: directory
+ 
+   - name: Copy Vancouver File to Client Folder
+     copy: src={{ item.src }} dest={{ item.dest }}
+     with_items: "{{ vpnfiles }}"
+ 
+   - name: Append User-Pass line
+     lineinfile: 
+       path: "{{ item.dest }}"
+       regexp: '^auth-user-pass'
+       insertafter: '^auth-user-pass'
+       line: "auth-user-pass {{vpndir}}/auth"
+     with_items: "{{ vpnfiles }}"
+ 
+ 
+   - name: Add OpenVPN_Exporter configuration
+     blockinfile:
+       path: "{{item.dest}}"
+       marker: "#### OpenVPN_Exporter Configuration ####"
+       insertafter: "auth-user-pass {{vpndir}}/auth"
+       block: |
+         status /etc/openvpn_exporter/
+         status-version 3
+     with_items: "{{ vpnfiles }}"
+ 
+   - name: Add OpenVPN_Exporter Directory
+     file:
+       path: /etc/openvpn_exporter
+       state: directory
+ 
+   - name: Start and enable OpenVPN service
+     service:
+       name: "openvpn-client@{{ active_vpn }}"
+       enabled: yes
+       state: started
+ 
+  # https://docs.ansible.com/ansible/latest/collections/ansible/posix/sysctl_module.html
+   - name: enable and persist ip forwarding
+     sysctl:
+       name: net.ipv4.ip_forward
+       value: "1"
+       state: present
+       sysctl_set: yes
+       reload: yes
+ 
+   - firewalld:
+       masquerade: yes
+       state: enabled
+       permanent: true
+       zone: public
+ 
+ 
