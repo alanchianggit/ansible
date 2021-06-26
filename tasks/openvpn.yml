@@ -27,10 +27,10 @@
        path: "{{client}}/pia-*.conf"
        state: absent
  
-#   - name: Download OpenVPN from PIA
-#     get_url: 
-#       url: "https://www.privateinternetaccess.com/openvpn/openvpn-strong.zip"
-#       dest: "{{vpndir}}"
+   - name: Download OpenVPN from PIA
+     get_url: 
+       url: "https://www.privateinternetaccess.com/openvpn/openvpn-strong.zip"
+       dest: "{{vpndir}}"
 
    - name: ensure PIA directory exists
      file:
@@ -40,7 +40,7 @@
    - name: Unzip OpenVPN file downloaded from PIA
      unarchive:
 #       src: /etc/openvpn/openvpn-strong.zip
-       src: "https://www.privateinternetaccess.com/openvpn/openvpn-strong.zip"
+       src: https://www.privateinternetaccess.com/openvpn/openvpn-strong.zip
        dest: "{{vpndir}}/pia/"
  
    - name: Create Client Directory if doesn't exist
