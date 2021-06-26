@@ -1,13 +1,11 @@
 ---
-- hosts: centos
-  become: yes
-  vars:
+- vars:
     vpndir: /etc/openvpn
     client: /etc/openvpn/client
     vpnfiles:
-      - {src: '{{ vpndir }}/pia/CA Vancouver.ovpn', dest: '{{ client }}/pia-van.conf'}
-      - {src: '{{ vpndir }}/pia/CA Toronto.ovpn', dest: '{{ client }}/pia-tor.conf'}
-    active_vpn: pia-tor
+      - {src: '{{ vpndir }}/pia/CA Vancouver.ovpn', dest: '{{ client }}/pia-van-strong.conf'}
+      - {src: '{{ vpndir }}/pia/CA Toronto.ovpn', dest: '{{ client }}/pia-tor-strong.conf'}
+    active_vpn: pia-van-strong
 
   tasks:
   - name: Install Common packages (CENTOS or REDHAT)
