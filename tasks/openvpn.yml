@@ -42,6 +42,7 @@
 #       src: /etc/openvpn/openvpn-strong.zip
        src: https://www.privateinternetaccess.com/openvpn/openvpn-strong.zip
        dest: "{{vpndir}}/pia/"
+       remote_src: yes
  
    - name: Create Client Directory if doesn't exist
      file:
