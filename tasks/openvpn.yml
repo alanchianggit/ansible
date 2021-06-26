@@ -1,4 +1,7 @@
 ---
+   - name: include default vars file 
+     include_vars: "vars/openvpn_vars.yml"
+
    - name: Install Common packages (CENTOS or REDHAT)
      yum:
        state: present
