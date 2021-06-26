@@ -10,6 +10,19 @@
     active_vpn: pia-tor
 
   tasks:
+  - name: Install Common packages (CENTOS or REDHAT)
+    yum:
+      state: present
+      name:
+        - openvpn
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat'
+  
+  - name: Install Common packages (DEBIAN or UBUNTU)
+    apt:
+      state: present
+      name:
+      - openvpn
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
   - name: Delete OpenVPN file from openvpn Folder
     file:
